@@ -85,9 +85,24 @@ public class Build {
    * @return true if the destination is reachable from the start, false otherwise
    */
   public static boolean canReach(Airport start, Airport destination) {
+    return canReach(start, destination, new HashSet<>());
+  }
+  
+  private static boolean canReach(Airport current, Airport dest, Set<Airport> visited) {
+    if (current == null || visited.contains(current)) return false;
+    visited.add(current);
+
+    // stop if destination reached
+    if (current == dest) return true;
+
+    // return true immediately if destination is found
+    for (Airport outbound : current.getOutboundFlights()) {
+      if (canReach(outbound, dest, visited) == true) return true;
+    }
+
+    // return false if destination is never reached
     return false;
   }
-
   /**
    * Returns the set of all values in the graph that cannot be reached from the given starting value.
    * The graph is represented as a map where each vertex is associated with a list of its neighboring values.
