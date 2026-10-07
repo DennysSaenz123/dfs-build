@@ -118,7 +118,7 @@ public class Build {
   }
 
   private static <T> Set<T> unreachable(Map<T, List<T>> graph, T current, Set<T> notVisited) {
-    if (!notVisited.contains(current) || graph.get(current).isEmpty()) return notVisited;
+    if (!notVisited.contains(current)) return notVisited;
     notVisited.remove(current);
 
     for (T neighbor : graph.get(current)) {
